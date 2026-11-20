@@ -7,13 +7,13 @@ Stormbound). Easy for new hunters, useful for all.
 
 - **Your pet**: a card when it isn't out (click to call it), when it died (click to revive it)
   and when it's hungry (click to feed it a food from your bags it eats; says so when you have none).
-- **Ammo**: a card when your arrows or bullets run low (with a bow, gun or crossbow). With
-  [Questie](https://www.curseforge.com/wow/addons/questie) installed it names the nearest ammo
-  vendor on your side; click the card (or type `/pack ammo`) for a waypoint to it.
+- **Ammo**: a card when your arrows or bullets run low (with a bow, gun or crossbow). It names
+  the nearest ammo vendor on your side; click the card (or type `/pack ammo`) for a waypoint to
+  it. Packbound knows the vendors in towns and remembers every ammo vendor you open.
 - **Aspect**: a card when no aspect is up; click to cast yours (Hawk, Monkey or Wild).
 - **Trueshot Aura** when you have the talent.
 - **Travel**: press Escape, and beside the game menu you get Aspect of the Cheetah, Aspect of the
-  Pack and your Hearthstone.
+  Pack, the nearest ammo vendor (click for a waypoint) and your Hearthstone.
 - **Well-Rested and Well Fed** timers, plain-word explanations in tooltips, movable frames
   (`/pack unlock`), three skins (Wild, Blizzard, Flat).
 

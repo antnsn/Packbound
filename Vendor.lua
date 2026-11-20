@@ -5,6 +5,7 @@
 -- ns.NearestAmmoVendor() -> { name, zone, map, x, y (0..1), yards } or nil, reason
 -- ns.WaypointToAmmo()    sets a map waypoint (and a TomTom one, if TomTom is loaded) and says where
 -- ns.VendorsChanged()    forget the worked-out vendor positions (the list changed)
+-- ns.AmmoTravelRow()     the travel panel's row: the nearest vendor, a click sets the waypoint
 local _, ns = ...
 if ns.disabled then return end
 local D = ns.DATA
@@ -124,6 +125,18 @@ function ns.WaypointToAmmo()
 	ns.Print(("nearest ammo vendor: %s, %s (%.1f, %.1f), %d yards. %s"):format(
 		v.name, v.zone, v.x * 100, v.y * 100, v.yards,
 		set and "Waypoint set." or "No waypoint here: look for it on the map."))
+end
+
+-- the travel panel's ammo row (LibBound's action row)
+function ns.AmmoTravelRow()
+	local icon = AmmoKind() == "bullets" and 132384 or 132382
+	local v = ns.NearestAmmoVendor()
+	if not v then
+		return { icon = icon, label = "Ammo vendor: none known here", sub = "open one and Packbound remembers it",
+			tip = "Nearest ammo vendor", help = ns.Help.ammoVendor }
+	end
+	return { icon = icon, label = "Ammo: " .. v.name, sub = ("%s, %d yards"):format(v.zone, v.yards),
+		tip = "Nearest ammo vendor", help = ns.Help.ammoVendor, note = "Click for a waypoint.", click = ns.WaypointToAmmo }
 end
 
 -- a merchant window: remember an ammo vendor, and where it stands (you are next to it)

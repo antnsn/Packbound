@@ -17,12 +17,12 @@ Packbound looks after the things a hunter forgets: a pet that isn't out, died or
 
 ## Ammo and aspect
 - **Ammo**: a card when your arrows or bullets run low (with a bow, gun or crossbow equipped).
-- **Nearest ammo vendor**: with Questie installed, the ammo card names the closest vendor on your side who sells your kind of ammo. Click it, or type `/pack ammo`, for a waypoint.
+- **Nearest ammo vendor**: the ammo card names the closest vendor on your side who sells your kind of ammo. Click it, or type `/pack ammo`, for a waypoint. Packbound knows the vendors in towns and remembers every ammo vendor you open; no other addon needed.
 - **Aspect**: a card when no aspect is up. Click to cast yours (Hawk, Monkey or Wild). Cheetah and Pack count as travelling.
 - **Trueshot Aura** as a timer when you have the talent.
 
 ## Travel
-- **Press Escape**: beside the game menu you get Aspect of the Cheetah, Aspect of the Pack and your Hearthstone.
+- **Press Escape**: beside the game menu you get Aspect of the Cheetah, Aspect of the Pack, the nearest ammo vendor (click for a waypoint) and your Hearthstone.
 
 ## Also in it
 - **Well Rested and Well Fed**: a countdown before they run out, with a sound if you like.
@@ -40,7 +40,7 @@ Packbound looks after the things a hunter forgets: a pet that isn't out, died or
 - `/pack grid [size]`: snap to a grid while moving, or set its size
 - `/pack minimap`: show or hide the minimap button
 - `/pack explain`: turn the plain-word explanations in tooltips on or off
-- `/pack ammo`: set a waypoint to the nearest ammo vendor (needs Questie)
+- `/pack ammo`: set a waypoint to the nearest ammo vendor
 
 ## The Bound family
 Packbound is one of the Bound addons, one per class, built on the same core: Lightbound (paladin), Chronobound (mage), Stormbound (shaman), Packbound (hunter), Spiritbound (priest) and Felbound (warlock). They look like their class but work the same way, so if you know one, you know them all.

@@ -1,5 +1,5 @@
--- The travel panel (LibBound) beside the game menu: Aspect of the Cheetah and of the Pack, then
--- the Hearthstone.
+-- The travel panel (LibBound) beside the game menu: Aspect of the Cheetah and of the Pack, the
+-- nearest ammo vendor (click: waypoint), then the Hearthstone.
 local _, ns = ...
 if ns.disabled then return end
 local Bound = LibStub("LibBound-1.0")
@@ -23,4 +23,5 @@ function ns.TravelRows()
 	return out
 end
 
-Bound.InstallTravel(ns, { columns = { "HUNTER" }, rows = ns.TravelRows, hearthHelp = ns.Help.hearthstone })
+Bound.InstallTravel(ns, { columns = { "HUNTER" }, rows = ns.TravelRows, hearthHelp = ns.Help.hearthstone,
+	action = function() return ns.AmmoTravelRow() end })
