@@ -1,5 +1,6 @@
 -- The ammo card: arrows or bullets in the ammo slot run low (urgent at none), only with a bow, gun
--- or crossbow equipped. Quiet in combat.
+-- or crossbow equipped. Quiet in combat. With Questie loaded it also names the nearest ammo
+-- vendor (Vendor.lua), and a click on the card sets a waypoint to it.
 local _, ns = ...
 if ns.disabled then return end
 local D = ns.DATA
@@ -30,10 +31,16 @@ local card
 
 function M:Update()
 	if not card then return end
-	if ns.unlocked then card:SetStatus("150 left"); card:Show(); card:Glow(false) return end
+	if ns.unlocked then card:SetTitle("Ammo: 150 left"); card:SetStatus("Nearest: a vendor near you"); card:Show(); card:Glow(false) return end
 	local n = ns.AmmoCount()
 	if ns.db.ammo and n and n <= ns.db.ammoLow and ns.UsesAmmo() and not ns.InCombat() then
-		card:SetStatus(n == 0 and "None left: buy arrows or bullets" or (n .. " left"), n == 0)
+		local v = ns.NearestAmmoVendor()
+		card:SetTitle(n == 0 and "No ammo left" or ("Ammo: " .. n .. " left"))
+		if v then
+			card:SetStatus(("Nearest: %s, %s (click: waypoint)"):format(v.name, v.zone), n == 0)
+		else
+			card:SetStatus(n == 0 and "Buy arrows or bullets" or "Running low", n == 0)
+		end
 		card:Show(); card:Glow(true)
 	else
 		card:Glow(false); card:Hide()
@@ -41,7 +48,7 @@ function M:Update()
 end
 
 function M:Init()
-	card = ns.MakeCard("PackboundAmmoFrame")
+	card = ns.MakeCard("PackboundAmmoFrame", { width = 300, clickable = true })
 	card:SetIcon(132382)
 	card:SetTitle("Ammo")
 	card:SetExplain(ns.Help.ammo)
@@ -52,5 +59,11 @@ function M:Init()
 		"PLAYER_ENTERING_WORLD" }) do f:RegisterEvent(e) end
 	f:RegisterUnitEvent("UNIT_INVENTORY_CHANGED", "player")
 	f:SetScript("OnEvent", function() M:Update() end)
+	-- a click sets a waypoint to the nearest ammo vendor (not while moving the frames)
+	card:SetScript("OnMouseUp", function(_, button)
+		if button == "LeftButton" and not ns.unlocked and card:IsShown() then ns.WaypointToAmmo() end
+	end)
+	-- the nearest vendor changes as you travel
+	C_Timer.NewTicker(5, function() if card:IsShown() then M:Update() end end)
 	M:Update()
 end

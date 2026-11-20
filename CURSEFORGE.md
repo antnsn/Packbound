@@ -13,6 +13,7 @@ Packbound looks after the things a hunter forgets: a pet that isn't out, died or
 
 ## Ammo and aspect
 - **Ammo**: a card when your arrows or bullets run low (with a bow, gun or crossbow equipped).
+- **Nearest ammo vendor**: with Questie installed, the ammo card names the closest vendor on your side who sells your kind of ammo. Click it, or type `/pack ammo`, for a waypoint.
 - **Aspect**: a card when no aspect is up. Click to cast yours (Hawk, Monkey or Wild). Cheetah and Pack count as travelling.
 - **Trueshot Aura** as a timer when you have the talent.
 
@@ -35,12 +36,18 @@ Packbound looks after the things a hunter forgets: a pet that isn't out, died or
 - `/pack grid [size]`: snap to a grid while moving, or set its size
 - `/pack minimap`: show or hide the minimap button
 - `/pack explain`: turn the plain-word explanations in tooltips on or off
+- `/pack ammo`: set a waypoint to the nearest ammo vendor (needs Questie)
 
 ## The Bound family
 Packbound is one of the Bound addons, one per class, built on the same core: Lightbound (paladin), Chronobound (mage), Stormbound (shaman), Packbound (hunter), Spiritbound (priest) and Felbound (warlock). They look like their class but work the same way, so if you know one, you know them all.
 
 ## Changelog
 <!-- changelog:start -->
+### 0.1.0 beta 5
+
+- **Nearest ammo vendor**: with Questie installed, the ammo card names the closest vendor on your side who sells arrows (bow, crossbow) or bullets (gun). Click the card, or type `/pack ammo`, for a map waypoint (and a TomTom one, if you use TomTom).
+- The ammo card shows the count in its title ("Ammo: 120 left").
+
 ### 0.1.0 beta 4
 
 - **Minimap button** works with minimap addons (EllesmereUI, SexyMap, ElvUI, MinimapButtonBag, broker bars): it is a LibDBIcon button now. Its place on the minimap is kept.
