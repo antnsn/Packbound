@@ -1,5 +1,5 @@
 <!-- summary (CurseForge "Summary" field, at most 256 characters):
-Hunter helper for WoW: Forever: one-click cards for a pet that isn't out, died or is hungry, ammo running low and a missing aspect. Explained in plain words, so it's easy for a new hunter and handy for an old one.
+Hunter helper for WoW: Forever: one-click cards for a pet that isn't out, died or is hungry, low ammo and a missing aspect; the nearest ammo vendor with a waypoint, and Cheetah and Pack beside the Escape menu.
 -->
 
 # Packbound
