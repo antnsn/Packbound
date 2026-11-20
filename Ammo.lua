@@ -1,6 +1,6 @@
 -- The ammo card: arrows or bullets in the ammo slot run low (urgent at none), only with a bow, gun
--- or crossbow equipped. Quiet in combat. With Questie loaded it also names the nearest ammo
--- vendor (Vendor.lua), and a click on the card sets a waypoint to it.
+-- or crossbow equipped. Quiet in combat. It also names the nearest ammo vendor (Vendor.lua), and a
+-- click on the card sets a waypoint to it.
 local _, ns = ...
 if ns.disabled then return end
 local D = ns.DATA

@@ -1,17 +1,16 @@
 -- The nearest ammo vendor: who sells arrows (bows, crossbows) or bullets (guns) closest to you,
--- on your side and your continent. The data comes from Questie's database while Questie is
--- loaded (it knows who sells what, and where); Questie is GPL, so it is asked at run time and
--- nothing of it is copied into Packbound. Without Questie there is no vendor line.
+-- on your side and your continent. The vendors come from Packbound's own list (VendorData.lua)
+-- and from every merchant you open that sells ammo (learned, account-wide in PackboundDB.vendors:
+-- a learned vendor wins over the list's entry for the same NPC, also when it sells no ammo).
 -- ns.NearestAmmoVendor() -> { name, zone, map, x, y (0..1), yards } or nil, reason
 -- ns.WaypointToAmmo()    sets a map waypoint (and a TomTom one, if TomTom is loaded) and says where
+-- ns.VendorsChanged()    forget the worked-out vendor positions (the list changed)
+-- ns.AmmoTravelRow()     the travel panel's row: the nearest vendor, a click sets the waypoint
 local _, ns = ...
 if ns.disabled then return end
 local D = ns.DATA
 
--- Classic ammo sold by vendors, lowest level first
-local ARROWS = { 2512, 2515, 3030, 11285 }  -- Rough, Sharp, Razor, Jagged Arrow
-local BULLETS = { 2516, 2519, 3033, 11284 } -- Light Shot, Heavy Shot, Solid Shot, Accurate Slugs
-local GUN = 3                               -- weapon subclass that shoots bullets
+local GUN = 3 -- weapon subclass that shoots bullets
 
 -- pcall that hands back every result (GetItemInfoInstant's 7th is the weapon type), or nil
 local function Safe(fn, ...)
@@ -20,73 +19,63 @@ local function Safe(fn, ...)
 	return unpack(r, 2, table.maxn(r))
 end
 
--- Questie's QuestieDB and ZoneDB modules, or nil
-local function Questie()
-	local loader = rawget(_G, "QuestieLoader")
-	if type(loader) ~= "table" or type(loader.ImportModule) ~= "function" then return nil end
-	local db = Safe(loader.ImportModule, loader, "QuestieDB")
-	local zones = Safe(loader.ImportModule, loader, "ZoneDB")
-	if type(db) ~= "table" or type(zones) ~= "table" or type(db.QueryItemSingle) ~= "function"
-		or type(db.QueryNPCSingle) ~= "function" or type(zones.GetUiMapIdByAreaId) ~= "function" then
-		return nil
-	end
-	return db, zones
-end
-function ns.HasVendorData() return Questie() ~= nil end
-
 local function AmmoKind()
 	local id = Safe(GetInventoryItemID, "player", D.rangedSlot)
 	if not id or ns.IsSecret(id) then return "arrows" end
 	local _, _, _, _, _, _, subclassID = Safe(C_Item.GetItemInfoInstant, id)
 	return subclassID == GUN and "bullets" or "arrows"
 end
+ns.AmmoKind = AmmoKind
 
-local function Friendly(db, faction)
-	if type(db.IsFriendlyToPlayer) == "function" then
-		local ok, yes = pcall(db.IsFriendlyToPlayer, faction)
-		if ok then return yes and true or false end
-	end
+local function Friendly(side)
+	if side == "AH" then return true end
 	local mine = Safe(UnitFactionGroup, "player")
-	return faction == nil or faction == "AH" or (mine == "Alliance" and faction == "A") or (mine == "Horde" and faction == "H")
+	if ns.IsSecret(mine) then return false end
+	return (mine == "Alliance" and side == "A") or (mine == "Horde" and side == "H")
 end
 
--- every spawn of every friendly vendor of that kind, with its world position; built once per kind
--- (only when Questie answered: its database may still be loading right after login)
+-- every friendly vendor of that kind, with its world position; worked out once per kind
 local cache = {}
+function ns.VendorsChanged() cache = {} end
+
+-- the list's entry for an NPC id, or nil
+local function Listed(npc)
+	for _, v in ipairs(ns.AMMO_VENDORS or {}) do
+		if v.npc == npc then return v end
+	end
+end
+
+-- the list with what was learned laid over it
+local function Known()
+	local learned = ns.db.vendors or {}
+	local out = {}
+	for _, v in ipairs(ns.AMMO_VENDORS or {}) do
+		if not learned[v.npc] then out[#out + 1] = v end
+	end
+	for _, v in pairs(learned) do out[#out + 1] = v end
+	return out
+end
+
 local function Vendors(kind)
 	if cache[kind] then return cache[kind] end
-	local db, zones = Questie()
-	if not db then return nil end
-	local out, seen = {}, {}
-	for _, item in ipairs(kind == "bullets" and BULLETS or ARROWS) do
-		for _, npc in ipairs(Safe(db.QueryItemSingle, item, "vendors") or {}) do
-			if not seen[npc] then
-				seen[npc] = true
-				local name = Safe(db.QueryNPCSingle, npc, "name")
-				local spawns = Safe(db.QueryNPCSingle, npc, "spawns")
-				if name and type(spawns) == "table" and Friendly(db, Safe(db.QueryNPCSingle, npc, "friendlyToFaction")) then
-					for area, points in pairs(spawns) do
-						local map = Safe(zones.GetUiMapIdByAreaId, zones, area)
-						for _, p in ipairs(map and points or {}) do
-							local x, y = p[1] and p[1] / 100, p[2] and p[2] / 100
-							local cont, world = Safe(C_Map.GetWorldPosFromMapPos, map, CreateVector2D(x or 0, y or 0))
-							if x and y and world then
-								local wx, wy = world:GetXY()
-								out[#out + 1] = { name = name, map = map, x = x, y = y, cont = cont, wx = wx, wy = wy }
-							end
-						end
-					end
-				end
+	local out = {}
+	for _, v in ipairs(Known()) do
+		local sells = v[kind]
+		if sells and #sells > 0 and Friendly(v.side) then
+			local cont, world = Safe(C_Map.GetWorldPosFromMapPos, v.map, CreateVector2D(v.x, v.y))
+			if world then
+				local wx, wy = world:GetXY()
+				out[#out + 1] = { name = v.name, map = v.map, x = v.x, y = v.y, cont = cont, wx = wx, wy = wy }
 			end
 		end
 	end
-	if #out > 0 then cache[kind] = out end
+	cache[kind] = out
 	return out
 end
 
 local function Here()
 	local map = Safe(C_Map.GetBestMapForUnit, "player")
-	if not map then return nil end
+	if not map or ns.IsSecret(map) then return nil end
 	local pos = Safe(C_Map.GetPlayerMapPosition, map, "player")
 	if not pos then return nil end
 	local cont, world = Safe(C_Map.GetWorldPosFromMapPos, map, pos)
@@ -96,13 +85,10 @@ local function Here()
 end
 
 function ns.NearestAmmoVendor()
-	if not Questie() then return nil, "noquestie" end
-	local list = Vendors(AmmoKind())
-	if not list or #list == 0 then return nil, "none" end
 	local cont, px, py = Here()
 	if not cont then return nil, "nowhere" end
 	local best, bestD
-	for _, v in ipairs(list) do
+	for _, v in ipairs(Vendors(AmmoKind())) do
 		if v.cont == cont then
 			local d = (v.wx - px) ^ 2 + (v.wy - py) ^ 2
 			if not bestD or d < bestD then best, bestD = v, d end
@@ -117,9 +103,9 @@ end
 function ns.WaypointToAmmo()
 	local v, why = ns.NearestAmmoVendor()
 	if not v then
-		ns.Print(({ noquestie = "finding an ammo vendor needs Questie (it knows where the vendors are).",
-			nowhere = "can't tell where you are here (inside a dungeon?).",
-			none = "no ammo vendor on this continent in Questie's data." })[why] or "no ammo vendor found.")
+		ns.Print(({ nowhere = "can't tell where you are here (inside a dungeon?).",
+			none = "no ammo vendor known on this continent yet: open one and Packbound remembers it." })[why]
+			or "no ammo vendor found.")
 		return
 	end
 	-- say "waypoint set" only for a waypoint that really was (the map's own, or TomTom's)
@@ -140,3 +126,63 @@ function ns.WaypointToAmmo()
 		v.name, v.zone, v.x * 100, v.y * 100, v.yards,
 		set and "Waypoint set." or "No waypoint here: look for it on the map."))
 end
+
+-- the travel panel's ammo row (LibBound's action row)
+function ns.AmmoTravelRow()
+	local icon = AmmoKind() == "bullets" and 132384 or 132382
+	local v, why = ns.NearestAmmoVendor()
+	if not v and why == "nowhere" then
+		return { icon = icon, label = "Ammo vendor: can't tell where you are", sub = "inside a dungeon? Look again outside",
+			tip = "Nearest ammo vendor", help = ns.Help.ammoVendor }
+	end
+	if not v then
+		return { icon = icon, label = "Ammo vendor: none known here", sub = "open one and Packbound remembers it",
+			tip = "Nearest ammo vendor", help = ns.Help.ammoVendor }
+	end
+	return { icon = icon, label = "Ammo: " .. v.name, sub = ("%s, %d yards"):format(v.zone, v.yards),
+		tip = "Nearest ammo vendor", help = ns.Help.ammoVendor, note = "Click for a waypoint.", click = ns.WaypointToAmmo }
+end
+
+-- a merchant window: remember an ammo vendor, and where it stands (you are next to it)
+local AMMO = {}
+for kind, ids in pairs(ns.AMMO_ITEMS) do
+	for _, id in ipairs(ids) do AMMO[id] = kind end
+end
+
+local function Learn()
+	local guid = Safe(UnitGUID, "npc")
+	if type(guid) ~= "string" or ns.IsSecret(guid) then return end
+	local unitType, _, _, _, _, id = strsplit("-", guid)
+	local npc = tonumber(id)
+	if (unitType ~= "Creature" and unitType ~= "Vehicle") or not npc then return end
+	local map = Safe(C_Map.GetBestMapForUnit, "player")
+	if not map or ns.IsSecret(map) then return end
+	local pos = Safe(C_Map.GetPlayerMapPosition, map, "player")
+	if not pos then return end
+	local x, y = pos:GetXY()
+	if ns.IsSecret(x) or ns.IsSecret(y) then return end
+	if not select(2, Safe(C_Map.GetWorldPosFromMapPos, map, pos)) then return end -- an instance: no use for it
+	local sells = { arrows = {}, bullets = {} }
+	local n = Safe(GetMerchantNumItems) or 0
+	if ns.IsSecret(n) or n == 0 then return end -- no wares (yet): nothing to learn or correct from
+	for i = 1, n do
+		local item = Safe(GetMerchantItemID, i)
+		local kind = item and not ns.IsSecret(item) and AMMO[item]
+		if kind then sells[kind][#sells[kind] + 1] = item end
+	end
+	local listed = Listed(npc)
+	if #sells.arrows == 0 and #sells.bullets == 0 and not listed then return end -- not an ammo vendor
+	local name = Safe(UnitName, "npc")
+	if not name or ns.IsSecret(name) then name = listed and listed.name or "?" end
+	local mine = Safe(UnitFactionGroup, "player")
+	if ns.IsSecret(mine) then mine = nil end
+	local side = listed and listed.side or (mine == "Alliance" and "A") or (mine == "Horde" and "H") or "AH"
+	ns.db.vendors = ns.db.vendors or {}
+	ns.db.vendors[npc] = { npc = npc, name = name, map = map, x = x, y = y, side = side,
+		arrows = sells.arrows, bullets = sells.bullets, seen = time() }
+	ns.VendorsChanged()
+end
+
+local f = CreateFrame("Frame")
+f:RegisterEvent("MERCHANT_SHOW")
+f:SetScript("OnEvent", Learn)

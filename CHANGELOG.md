@@ -1,5 +1,11 @@
 # Changelog
 
+## Unreleased
+
+- **The nearest ammo vendor works without Questie**: Packbound has its own list of every ammo vendor in the world (made from Questie's database) and corrects it with every ammo vendor you open.
+- **On the Escape menu too**: the travel panel shows the nearest ammo vendor; click it for a waypoint.
+- **License**: Packbound is GPL-3.0-or-later now (it was MIT), because the vendor list comes from Questie's GPL data.
+
 ## 0.1.0 beta 5
 
 - **Nearest ammo vendor**: with Questie installed, the ammo card names the closest vendor on your side who sells arrows (bow, crossbow) or bullets (gun). Click the card, or type `/pack ammo`, for a map waypoint (and a TomTom one, if you use TomTom).

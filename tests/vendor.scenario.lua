@@ -1,5 +1,5 @@
---@moods: noquestie near gun click dungeon nowaypoint
--- the nearest ammo vendor, from (a stand-in for) Questie's database: on your side, on your
+--@moods: near gun faction click dungeon nowaypoint none
+-- the nearest ammo vendor, from Packbound's own list (a test list here): on your side, on your
 -- continent, arrows for a bow and bullets for a gun; a click on the card sets a waypoint
 local T = dofile(wb.dir .. "/tests/_hunter.lua")
 local m = wb.mood
@@ -14,39 +14,34 @@ end
 if m == "dungeon" then s.pos = { map = 999, x = 0.5, y = 0.5 } end
 wb.login()
 
--- Questie: item -> vendors, npc -> name / side / spawns ({ [areaId] = { { x, y } } }, 0..100)
-local NPCS = {
-	[1] = { name = "Near Bowyer", friendlyToFaction = "H", spawns = { [14] = { { 52, 48 } } } },
-	[2] = { name = "Far Bowyer", friendlyToFaction = "H", spawns = { [14] = { { 90, 90 } } } },
-	[3] = { name = "Alliance Bowyer", friendlyToFaction = "A", spawns = { [14] = { { 50, 51 } } } },
-	[4] = { name = "Gunsmith", friendlyToFaction = "AH", spawns = { [14] = { { 70, 70 } } } },
-	[5] = { name = "Elwynn Bowyer", friendlyToFaction = "AH", spawns = { [12] = { { 50, 50 } } } },
+wb.ns.AMMO_VENDORS = m == "none" and {} or {
+	{ npc = 1, name = "Near Bowyer", map = 1411, x = 0.52, y = 0.48, side = "H", arrows = { 2512 }, bullets = {} },
+	{ npc = 2, name = "Far Bowyer", map = 1411, x = 0.90, y = 0.90, side = "H", arrows = { 2512, 2515 }, bullets = {} },
+	{ npc = 3, name = "Alliance Bowyer", map = 1411, x = 0.50, y = 0.51, side = "A", arrows = { 2512 }, bullets = {} },
+	{ npc = 4, name = "Gunsmith", map = 1411, x = 0.70, y = 0.70, side = "AH", arrows = {}, bullets = { 2516 } },
+	{ npc = 5, name = "Elwynn Bowyer", map = 1429, x = 0.50, y = 0.50, side = "AH", arrows = { 2512 }, bullets = {} },
 }
-local VENDORS = { [2512] = { 1, 2, 3, 5 }, [2516] = { 4 } }
-local AREA = { [14] = 1411, [12] = 1429 }
-if m ~= "noquestie" then
-	local db = {
-		QueryItemSingle = function(id, key) if key == "vendors" then return VENDORS[id] end end,
-		QueryNPCSingle = function(id, key) return NPCS[id] and NPCS[id][key] end,
-	}
-	local zones = { GetUiMapIdByAreaId = function(_, area) return AREA[area] end }
-	wb.G.QuestieLoader = { ImportModule = function(_, name) return ({ QuestieDB = db, ZoneDB = zones })[name] end }
-end
+wb.ns.VendorsChanged()
 wb.advance(6) -- the card looks again every 5 seconds
 local card = wb.frame("PackboundAmmoFrame")
 wb.expect("ammo card", wb.shown("PackboundAmmoFrame"), true)
 wb.expect("title", card.titleText:GetText(), "Ammo: 50 left")
 local status = card.statusText:GetText()
-if m == "noquestie" then
-	wb.expect("no vendor line without Questie", status, "Running low")
-	wb.slash("/pack ammo")
-	wb.check(wb.printed("needs Questie"), "/pack ammo says it needs Questie")
-elseif m == "near" then
+if m == "near" then
 	wb.expect("the nearest friendly vendor", status, "Nearest: Near Bowyer, Durotar (click: waypoint)")
+elseif m == "faction" then
+	wb.check(not status:find("Alliance Bowyer", 1, true), "never the other side's vendor, though it stands closest")
+	wb.slash("/pack ammo")
+	wb.check(not wb.printed("Alliance Bowyer"), "not on /pack ammo either")
 elseif m == "gun" then
 	wb.expect("bullets for a gun", status, "Nearest: Gunsmith, Durotar (click: waypoint)")
 elseif m == "dungeon" then
 	wb.expect("no position (a dungeon): no vendor line", status, "Running low")
+elseif m == "none" then
+	wb.expect("no vendor known: no vendor line", status, "Running low")
+	wb.slash("/pack ammo")
+	wb.check(wb.printed("no ammo vendor known on this continent"), "/pack ammo says none is known here")
+	wb.check(not wb.printed("Questie"), "and never asks for Questie")
 elseif m == "nowaypoint" then
 	wb.state.maps[1411].mapType = 2 -- a map that takes no waypoints, and no TomTom
 	card:GetScript("OnMouseUp")(card, "LeftButton")
