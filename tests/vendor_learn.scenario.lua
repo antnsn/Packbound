@@ -1,4 +1,4 @@
---@moods: learned corrected moved notcreature indungeon
+--@moods: learned corrected moved notcreature indungeon emptylist secretfaction
 -- Packbound learns ammo vendors from the merchant window: who sells arrows or bullets, and where
 -- they stand on Forever; a visit corrects a list entry that sells no ammo or stands elsewhere
 local T = dofile(wb.dir .. "/tests/_hunter.lua")
@@ -58,6 +58,15 @@ elseif m == "moved" then
 elseif m == "notcreature" then
 	visit("Player-1-0ABC", "Somebody", { 2512 })
 	wb.expect("a player's shop is not learned", next(vendors()), nil)
+elseif m == "emptylist" then
+	-- the merchant's wares not there yet (an empty list): no correction from that
+	visit(1, "Near Bowyer", {}, { map = 1411, x = 0.52, y = 0.48 })
+	wb.expect("nothing stored from an empty list", vendors()[1], nil)
+	wb.expect("the vendor is still offered", status(), "Nearest: Near Bowyer, Durotar (click: waypoint)")
+elseif m == "secretfaction" then
+	G.UnitFactionGroup = function() return wb.SECRET end
+	visit(9999, "New Bowyer", { 2512 }, { map = 1411, x = 0.60, y = 0.40 })
+	wb.expect("learned with no side to tell: both", vendors()[9999] and vendors()[9999].side, "AH")
 elseif m == "indungeon" then
 	visit(9999, "Deep Bowyer", { 2512 }, { map = 999, x = 0.5, y = 0.5 })
 	wb.expect("no position: nothing stored", next(vendors()), nil)

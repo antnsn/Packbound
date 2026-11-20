@@ -130,7 +130,11 @@ end
 -- the travel panel's ammo row (LibBound's action row)
 function ns.AmmoTravelRow()
 	local icon = AmmoKind() == "bullets" and 132384 or 132382
-	local v = ns.NearestAmmoVendor()
+	local v, why = ns.NearestAmmoVendor()
+	if not v and why == "nowhere" then
+		return { icon = icon, label = "Ammo vendor: can't tell where you are", sub = "inside a dungeon? Look again outside",
+			tip = "Nearest ammo vendor", help = ns.Help.ammoVendor }
+	end
 	if not v then
 		return { icon = icon, label = "Ammo vendor: none known here", sub = "open one and Packbound remembers it",
 			tip = "Nearest ammo vendor", help = ns.Help.ammoVendor }
@@ -160,7 +164,7 @@ local function Learn()
 	if not select(2, Safe(C_Map.GetWorldPosFromMapPos, map, pos)) then return end -- an instance: no use for it
 	local sells = { arrows = {}, bullets = {} }
 	local n = Safe(GetMerchantNumItems) or 0
-	if ns.IsSecret(n) then return end
+	if ns.IsSecret(n) or n == 0 then return end -- no wares (yet): nothing to learn or correct from
 	for i = 1, n do
 		local item = Safe(GetMerchantItemID, i)
 		local kind = item and not ns.IsSecret(item) and AMMO[item]
@@ -171,6 +175,7 @@ local function Learn()
 	local name = Safe(UnitName, "npc")
 	if not name or ns.IsSecret(name) then name = listed and listed.name or "?" end
 	local mine = Safe(UnitFactionGroup, "player")
+	if ns.IsSecret(mine) then mine = nil end
 	local side = listed and listed.side or (mine == "Alliance" and "A") or (mine == "Horde" and "H") or "AH"
 	ns.db.vendors = ns.db.vendors or {}
 	ns.db.vendors[npc] = { npc = npc, name = name, map = map, x = x, y = y, side = side,
