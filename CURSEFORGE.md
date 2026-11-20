@@ -17,7 +17,7 @@ Packbound looks after the things a hunter forgets: a pet that isn't out, died or
 
 ## Ammo and aspect
 - **Ammo**: a card when your arrows or bullets run low (with a bow, gun or crossbow equipped).
-- **Nearest ammo vendor**: the ammo card names the closest vendor on your side who sells your kind of ammo. Click it, or type `/pack ammo`, for a waypoint. Packbound knows the vendors in towns and remembers every ammo vendor you open; no other addon needed.
+- **Nearest ammo vendor**: the ammo card names the closest vendor on your side who sells your kind of ammo. Click it, or type `/pack ammo`, for a waypoint. Packbound knows the ammo vendors all over the world (no other addon needed) and corrects its list with every one you open.
 - **Aspect**: a card when no aspect is up. Click to cast yours (Hawk, Monkey or Wild). Cheetah and Pack count as travelling.
 - **Trueshot Aura** as a timer when you have the talent.
 

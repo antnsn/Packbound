@@ -56,3 +56,10 @@ Questie, and be visible when you want it, not only when you are nearly out.
 ## Left to the builder
 
 - Exact list contents (looked up and written by hand), and how the row looks in each skin.
+
+## Change (2026-11-21, Marius' decision)
+
+Wowhead pages expose neither vendor rows nor coordinates, so the list is not hand-written:
+`tools/make_vendor_data.py` generates `VendorData.lua` from the installed QuestieDB (128 vendors,
+the whole world). Questie's team allows copying under GPLv3, so every Bound class addon is now
+GPL-3.0-or-later (LibBound stays MIT). Questie's *code* is still not used at run time.

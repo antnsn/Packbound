@@ -2,8 +2,9 @@
 
 ## Unreleased
 
-- **The nearest ammo vendor works without Questie**: Packbound has its own list of ammo vendors and learns every ammo vendor you open (also where it really stands on Forever).
+- **The nearest ammo vendor works without Questie**: Packbound has its own list of every ammo vendor in the world (made from Questie's database) and corrects it with every ammo vendor you open.
 - **On the Escape menu too**: the travel panel shows the nearest ammo vendor; click it for a waypoint.
+- **License**: Packbound is GPL-3.0-or-later now (it was MIT), because the vendor list comes from Questie's GPL data.
 
 ## 0.1.0 beta 5
 

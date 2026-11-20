@@ -9,7 +9,8 @@ Stormbound). Easy for new hunters, useful for all.
   and when it's hungry (click to feed it a food from your bags it eats; says so when you have none).
 - **Ammo**: a card when your arrows or bullets run low (with a bow, gun or crossbow). It names
   the nearest ammo vendor on your side; click the card (or type `/pack ammo`) for a waypoint to
-  it. Packbound knows the vendors in towns and remembers every ammo vendor you open.
+  it. Packbound knows the ammo vendors all over the world and corrects its list with every one
+  you open.
 - **Aspect**: a card when no aspect is up; click to cast yours (Hawk, Monkey or Wild).
 - **Trueshot Aura** when you have the talent.
 - **Travel**: press Escape, and beside the game menu you get Aspect of the Cheetah, Aspect of the
@@ -38,3 +39,10 @@ wowbench check . && wowbench test .
 wowbench pack . --set-version 0.1.0
 python3 tools/make_media.py
 ```
+
+## License
+
+GPL-3.0-or-later: GNU General Public License, version 3 or (at your option) any later
+version; see [LICENSE](LICENSE). LibBound-1.0 (in `Libs/LibBound`) is MIT, see its own LICENSE. The ammo vendor list (`VendorData.lua`) is made from
+[QuestieDB](https://github.com/Questie/Questie) (part of Questie) by `tools/make_vendor_data.py`, used
+under the GPLv3 as the Questie team allows.
