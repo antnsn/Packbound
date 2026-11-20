@@ -1,0 +1,7 @@
+{
+  "database": "dolt",
+  "backend": "dolt",
+  "dolt_mode": "embedded",
+  "dolt_database": "Packbound",
+  "project_id": "ce72f93d-dc7e-47bf-b38d-c526a7f1a124"
+}
