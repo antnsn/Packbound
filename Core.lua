@@ -30,7 +30,7 @@ ns.disabled = Bound:NewAddon(addonName, ns, {
 		skin = "wild",
 		pet = true, petContent = false, petDied = {}, -- character -> true while the pet is dead -- warn when the pet is only content, not just unhappy
 		ptPoint = { "CENTER", "UIParent", "CENTER", -250, 200 },
-		ammo = true, ammoLow = 200,
+		ammo = true, ammoLow = 200, vendors = {}, -- NPC id -> an ammo vendor met in play (Vendor.lua)
 		amPoint = { "CENTER", "UIParent", "CENTER", 250, 200 },
 		aspect = true, aspectChoice = "Hawk",
 		asPoint = { "CENTER", "UIParent", "CENTER", -250, 140 },

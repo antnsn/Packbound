@@ -6,5 +6,5 @@ ignore = { "212", "432" }
 exclude_files = { "Libs/", "tests/", "tools/" }
 read_globals = {
 	"C_Container", "C_Item", "C_Map", "C_PetInfo", "C_SuperTrack", "C_Timer", "CreateVector2D", "CreateFrame", "GetInventoryItemCount", "GetInventoryItemID",
-	"GetRealmName", "InCombatLockdown", "IsMounted", "IsPlayerSpell", "LibStub", "UiMapPoint", "UnitExists", "UnitFactionGroup", "UnitIsDead", "UnitName",
+	"GetMerchantItemID", "GetMerchantNumItems", "GetRealmName", "InCombatLockdown", "strsplit", "time", "UnitGUID", "IsMounted", "IsPlayerSpell", "LibStub", "UiMapPoint", "UnitExists", "UnitFactionGroup", "UnitIsDead", "UnitName",
 }

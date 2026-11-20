@@ -1,5 +1,7 @@
 -- The nearest ammo vendor: who sells arrows (bows, crossbows) or bullets (guns) closest to you,
--- on your side and your continent. The vendors come from Packbound's own list (VendorData.lua).
+-- on your side and your continent. The vendors come from Packbound's own list (VendorData.lua)
+-- and from every merchant you open that sells ammo (learned, account-wide in PackboundDB.vendors:
+-- a learned vendor wins over the list's entry for the same NPC, also when it sells no ammo).
 -- ns.NearestAmmoVendor() -> { name, zone, map, x, y (0..1), yards } or nil, reason
 -- ns.WaypointToAmmo()    sets a map waypoint (and a TomTom one, if TomTom is loaded) and says where
 -- ns.VendorsChanged()    forget the worked-out vendor positions (the list changed)
@@ -35,10 +37,28 @@ end
 local cache = {}
 function ns.VendorsChanged() cache = {} end
 
+-- the list's entry for an NPC id, or nil
+local function Listed(npc)
+	for _, v in ipairs(ns.AMMO_VENDORS or {}) do
+		if v.npc == npc then return v end
+	end
+end
+
+-- the list with what was learned laid over it
+local function Known()
+	local learned = ns.db.vendors or {}
+	local out = {}
+	for _, v in ipairs(ns.AMMO_VENDORS or {}) do
+		if not learned[v.npc] then out[#out + 1] = v end
+	end
+	for _, v in pairs(learned) do out[#out + 1] = v end
+	return out
+end
+
 local function Vendors(kind)
 	if cache[kind] then return cache[kind] end
 	local out = {}
-	for _, v in ipairs(ns.AMMO_VENDORS or {}) do
+	for _, v in ipairs(Known()) do
 		local sells = v[kind]
 		if sells and #sells > 0 and Friendly(v.side) then
 			local cont, world = Safe(C_Map.GetWorldPosFromMapPos, v.map, CreateVector2D(v.x, v.y))
@@ -62,7 +82,6 @@ local function Here()
 	local wx, wy = world:GetXY()
 	return cont, wx, wy
 end
-ns.VendorHere = Here
 
 function ns.NearestAmmoVendor()
 	local cont, px, py = Here()
@@ -106,3 +125,46 @@ function ns.WaypointToAmmo()
 		v.name, v.zone, v.x * 100, v.y * 100, v.yards,
 		set and "Waypoint set." or "No waypoint here: look for it on the map."))
 end
+
+-- a merchant window: remember an ammo vendor, and where it stands (you are next to it)
+local AMMO = {}
+for kind, ids in pairs(ns.AMMO_ITEMS) do
+	for _, id in ipairs(ids) do AMMO[id] = kind end
+end
+
+local function Learn()
+	local guid = Safe(UnitGUID, "npc")
+	if type(guid) ~= "string" or ns.IsSecret(guid) then return end
+	local unitType, _, _, _, _, id = strsplit("-", guid)
+	local npc = tonumber(id)
+	if (unitType ~= "Creature" and unitType ~= "Vehicle") or not npc then return end
+	local map = Safe(C_Map.GetBestMapForUnit, "player")
+	if not map or ns.IsSecret(map) then return end
+	local pos = Safe(C_Map.GetPlayerMapPosition, map, "player")
+	if not pos then return end
+	local x, y = pos:GetXY()
+	if ns.IsSecret(x) or ns.IsSecret(y) then return end
+	if not select(2, Safe(C_Map.GetWorldPosFromMapPos, map, pos)) then return end -- an instance: no use for it
+	local sells = { arrows = {}, bullets = {} }
+	local n = Safe(GetMerchantNumItems) or 0
+	if ns.IsSecret(n) then return end
+	for i = 1, n do
+		local item = Safe(GetMerchantItemID, i)
+		local kind = item and not ns.IsSecret(item) and AMMO[item]
+		if kind then sells[kind][#sells[kind] + 1] = item end
+	end
+	local listed = Listed(npc)
+	if #sells.arrows == 0 and #sells.bullets == 0 and not listed then return end -- not an ammo vendor
+	local name = Safe(UnitName, "npc")
+	if not name or ns.IsSecret(name) then name = listed and listed.name or "?" end
+	local mine = Safe(UnitFactionGroup, "player")
+	local side = listed and listed.side or (mine == "Alliance" and "A") or (mine == "Horde" and "H") or "AH"
+	ns.db.vendors = ns.db.vendors or {}
+	ns.db.vendors[npc] = { npc = npc, name = name, map = map, x = x, y = y, side = side,
+		arrows = sells.arrows, bullets = sells.bullets, seen = time() }
+	ns.VendorsChanged()
+end
+
+local f = CreateFrame("Frame")
+f:RegisterEvent("MERCHANT_SHOW")
+f:SetScript("OnEvent", Learn)
