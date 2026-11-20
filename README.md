@@ -3,7 +3,7 @@
 # Packbound
 
 A hunter helper for **WoW: Forever**, part of the Bound family (Lightbound, Chronobound,
-Stormbound). Easy for new hunters, useful for all.
+Stormbound).
 
 - **Your pet**: a card when it isn't out (click to call it), when it died (click to revive it)
   and when it's hungry (click to feed it a food from your bags it eats; says so when you have none).

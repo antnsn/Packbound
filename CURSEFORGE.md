@@ -6,7 +6,7 @@ Hunter helper for WoW: Forever: one-click cards for a pet that isn't out, died o
 
 **The hunter helper for World of Warcraft: Forever: your pet, your ammo and your aspect, explained.**
 
-Packbound looks after the things a hunter forgets: a pet that isn't out, died or is hungry, ammo that runs low, and an aspect that isn't up. Every card is one click away from fixing it. Everything is explained in plain words, so it's easy for a new hunter and still handy for an old one.
+Packbound looks after the things a hunter forgets: a pet that isn't out, died or is hungry, ammo that runs low, and an aspect that isn't up. Every card is one click away from fixing it.
 
 **Beta:** Packbound is new. Spell IDs come from Classic and are checked on Forever before 0.1.0; tell us what doesn't work.
 
