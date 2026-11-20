@@ -68,6 +68,7 @@ local wild = {
 		glowEdge = { 1, 0.80, 0.46, 1 },
 		iconEdge = { 0.80, 0.60, 0.30, 0.9 },
 		frost = "Leather", frostTint = { 0.80, 0.62, 0.40, 0.14 },
+		crest = "Crest", crestTint = { 0.95, 0.74, 0.45, 0.15 },
 		shards = "Claw", shardTint = { 0.96, 0.80, 0.52, 0.95 },
 		rim = "Rim", breathe = true, breatheTime = 3.0,
 		burst = false, studs = false, ring = false, round = false,
