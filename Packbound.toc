@@ -1,0 +1,19 @@
+## Interface: 16001
+## Title: Packbound
+## Notes: Hunter helper: your pet (call, revive, feed), ammo, your aspect, Trueshot Aura, Well Rested and Well Fed, Aspect of the Cheetah and the Pack on the Escape menu. Explained for new players. /pack for options.
+## Author: Rheolux
+## Version: @project-version@
+## IconTexture: Interface\AddOns\Packbound\Media\Icon64
+## SavedVariables: PackboundDB
+
+Libs\LibStub\LibStub.lua
+Libs\LibBound\LibBound.xml
+
+Core.lua
+Skin.lua
+Help.lua
+Pet.lua
+Ammo.lua
+Aspect.lua
+Travel.lua
+Options.lua
