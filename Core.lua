@@ -23,7 +23,7 @@ ns.disabled = Bound:NewAddon(addonName, ns, {
 	slash = { "/pack", "/packbound" },
 	commands = {
 		ammo = { fn = function() if ns.WaypointToAmmo then ns.WaypointToAmmo() end end,
-			help = "set a waypoint to the nearest ammo vendor (needs Questie)" },
+			help = "set a waypoint to the nearest ammo vendor" },
 	},
 	media = "Interface\\AddOns\\Packbound\\Media\\",
 	defaults = {

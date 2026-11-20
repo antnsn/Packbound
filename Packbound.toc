@@ -13,6 +13,7 @@ Core.lua
 Skin.lua
 Help.lua
 Pet.lua
+VendorData.lua
 Vendor.lua
 Ammo.lua
 Aspect.lua
