@@ -1,3 +1,5 @@
+<p align="center"><img src="Packbound.png" width="180" alt="Packbound"></p>
+
 # Packbound
 
 A hunter helper for **WoW: Forever**, part of the Bound family (Lightbound, Chronobound,

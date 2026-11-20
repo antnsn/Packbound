@@ -41,6 +41,10 @@ Packbound is one of the Bound addons, one per class, built on the same core: Lig
 
 ## Changelog
 <!-- changelog:start -->
+### 0.1.0 beta 4
+
+- **Minimap button** works with minimap addons (EllesmereUI, SexyMap, ElvUI, MinimapButtonBag, broker bars): it is a LibDBIcon button now. Its place on the minimap is kept.
+
 ### 0.1.0 beta 3
 
 - **New icon**: hand-painted class art for the icon, the emblem and the faint crest behind the cards.
