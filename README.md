@@ -7,7 +7,9 @@ Stormbound). Easy for new hunters, useful for all.
 
 - **Your pet**: a card when it isn't out (click to call it), when it died (click to revive it)
   and when it's hungry (click to feed it a food from your bags it eats; says so when you have none).
-- **Ammo**: a card when your arrows or bullets run low (with a bow, gun or crossbow).
+- **Ammo**: a card when your arrows or bullets run low (with a bow, gun or crossbow). With
+  [Questie](https://www.curseforge.com/wow/addons/questie) installed it names the nearest ammo
+  vendor on your side; click the card (or type `/pack ammo`) for a waypoint to it.
 - **Aspect**: a card when no aspect is up; click to cast yours (Hawk, Monkey or Wild).
 - **Trueshot Aura** when you have the talent.
 - **Travel**: press Escape, and beside the game menu you get Aspect of the Cheetah, Aspect of the

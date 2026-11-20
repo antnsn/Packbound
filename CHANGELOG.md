@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.1.0 beta 5
+
+- **Nearest ammo vendor**: with Questie installed, the ammo card names the closest vendor on your side who sells arrows (bow, crossbow) or bullets (gun). Click the card, or type `/pack ammo`, for a map waypoint (and a TomTom one, if you use TomTom).
+- The ammo card shows the count in its title ("Ammo: 120 left").
+
 ## 0.1.0 beta 4
 
 - **Minimap button** works with minimap addons (EllesmereUI, SexyMap, ElvUI, MinimapButtonBag, broker bars): it is a LibDBIcon button now. Its place on the minimap is kept.

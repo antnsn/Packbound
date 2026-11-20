@@ -15,9 +15,9 @@ wb.advance(7)
 local ammo = wb.shown("PackboundAmmoFrame")
 if m == "low" then
 	wb.expect("ammo card", ammo, true)
-	wb.expect("count", wb.frame("PackboundAmmoFrame").statusText:GetText(), "120 left")
+	wb.expect("count", wb.frame("PackboundAmmoFrame").titleText:GetText(), "Ammo: 120 left")
 elseif m == "empty" then
-	wb.check(wb.frame("PackboundAmmoFrame").statusText:GetText():find("None left"), "urgent at none")
+	wb.expect("urgent at none", wb.frame("PackboundAmmoFrame").titleText:GetText(), "No ammo left")
 else
 	wb.expect("no ammo card", ammo, false)
 end
