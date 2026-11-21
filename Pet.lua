@@ -46,13 +46,31 @@ function ns.TrackPet()
 	Died(dead and true or false)
 end
 
+-- the pet's happiness: 1 unhappy, 2 content, 3 happy, or nil (no pet, or the client won't say)
+function ns.PetHappiness()
+	local happy = C_PetInfo and C_PetInfo.GetPetHappiness and Safe(C_PetInfo.GetPetHappiness)
+	if ns.IsSecret(happy) then return nil end
+	return happy
+end
+
+-- /pack pet: what Packbound sees, to tell why the pet card does or doesn't show
+function ns.PetReport()
+	local words = { [1] = "unhappy", [2] = "content", [3] = "happy" }
+	local happy = ns.PetHappiness()
+	local food = ns.PetFood()
+	local foodName = food and (Safe(C_Item.GetItemNameByID, food) or ("item " .. food)) or "none it eats"
+	ns.Print(("pet out: %s, happiness: %s, Feed Pet known: %s, food: %s, card: %s"):format(
+		Safe(UnitExists, "pet") and "yes" or "no", happy and (words[happy] or tostring(happy)) or "unknown",
+		Known(D.feedPet) and "yes" or "no", foodName, ns.PetNeed() or "nothing needed"))
+end
+
 -- what the pet needs: "call", "revive", "feed", "nofood" or nil
 function ns.PetNeed()
 	if not Known(D.callPet) then return nil end
 	ns.TrackPet()
 	local exists = Safe(UnitExists, "pet")
 	if not exists or Died() then return Died() and "revive" or "call" end
-	local happy = C_PetInfo and C_PetInfo.GetPetHappiness and Safe(C_PetInfo.GetPetHappiness)
+	local happy = ns.PetHappiness()
 	local hungry = happy and (happy == 1 or (ns.db.petContent and happy == 2))
 	if hungry and Known(D.feedPet) then return ns.PetFood() and "feed" or "nofood" end
 	return nil
@@ -65,8 +83,8 @@ local card, overlay
 local TEXT = {
 	call = { "Call your pet", "Missing: click to call it", "callPet" },
 	revive = { "Your pet is dead", "Click to revive it", "revivePet" },
-	feed = { "Your pet is hungry", "Click to feed it", "feedPet" },
-	nofood = { "Your pet is hungry", "No food it eats in your bags", "noFood" },
+	feed = { "Feed your pet", "Unhappy: click to feed", "feedPet" },
+	nofood = { "Feed your pet", "No food it eats in your bags", "noFood" },
 }
 
 function M:Update()
@@ -80,7 +98,9 @@ function M:Update()
 	local need = ns.db.pet and not ns.InCombat() and not IsMounted() and ns.PetNeed()
 	if need then
 		local t = TEXT[need]
-		card:SetTitle(t[1]); card:SetStatus(t[2], need ~= "feed"); card:SetExplain(ns.Help[t[3]])
+		local status = t[2]
+		if need == "feed" and ns.PetHappiness() == 2 then status = "Content: click to feed" end
+		card:SetTitle(t[1]); card:SetStatus(status, need ~= "feed"); card:SetExplain(ns.Help[t[3]])
 		card:Show(); card:Glow(true)
 	else
 		card:Glow(false); card:Hide()

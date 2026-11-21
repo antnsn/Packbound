@@ -45,7 +45,7 @@ When something needs you, a card shows up. Click the card to fix it:
 | --- | --- |
 | Call your pet | Calls your pet. |
 | Your pet is dead | Revives your pet. |
-| Your pet is hungry | Feeds it a food from your bags that it eats. |
+| Feed your pet | Feeds it a food from your bags that it eats. |
 | No aspect | Casts your aspect. |
 | Ammo | Sets a waypoint to the nearest ammo vendor. |
 | Trueshot Aura | Casts Trueshot Aura. |

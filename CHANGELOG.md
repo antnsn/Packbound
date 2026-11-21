@@ -2,6 +2,8 @@
 
 ## Unreleased
 
+- **Feed your pet**: the pet card says so plainly, with why underneath (Unhappy, or Content when that option is on).
+- `/pack pet` says in chat what Packbound sees about your pet: happiness, Feed Pet, the food it would use.
 - **The nearest ammo vendor works without Questie**: Packbound has its own list of every ammo vendor in the world (made from Questie's database) and corrects it with every ammo vendor you open.
 - **On the Escape menu too**: the travel panel shows the nearest ammo vendor; click it for a waypoint.
 - **License**: Packbound is GPL-3.0-or-later now (it was MIT), because the vendor list comes from Questie's GPL data.
