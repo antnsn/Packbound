@@ -5,6 +5,8 @@
 A hunter helper for **WoW: Forever**, part of the Bound family: one addon per class on the same
 core (Lightbound, Chronobound, Stormbound, Packbound, Spiritbound, Felbound, Dreambound).
 
+Full guide with screenshots: https://antnsn.github.io/Packbound/
+
 - **Your pet**: a card when it isn't out (click to call it), when it died (click to revive it)
   and when it's hungry (click to feed it a food from your bags it eats; says so when you have none).
 - **Ammo**: a card when your arrows or bullets run low (with a bow, gun or crossbow). It names

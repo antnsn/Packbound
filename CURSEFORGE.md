@@ -8,6 +8,8 @@ Hunter helper for WoW: Forever: one-click cards to call, revive or feed your pet
 
 Packbound looks after the things a hunter forgets: a pet that isn't out, died or is hungry, ammo that runs low, and an aspect that isn't up. Every card is one click away from fixing it.
 
+**Full guide with screenshots: https://antnsn.github.io/Packbound/**
+
 **Beta:** Packbound is new. Spell IDs come from Classic and are checked on Forever before 0.1.0; tell us what doesn't work.
 
 ## Your pet
