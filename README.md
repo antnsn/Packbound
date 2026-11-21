@@ -15,6 +15,7 @@ Stormbound).
 - **Trueshot Aura** when you have the talent.
 - **Travel**: press Escape, and beside the game menu you get Aspect of the Cheetah, Aspect of the
   Pack, the nearest ammo vendor (click for a waypoint) and your Hearthstone.
+- **Buff key** (Extras page): out of combat, each press casts the next thing a card asks for.
 - **Well-Rested and Well Fed** timers, plain-word explanations in tooltips, movable frames
   (`/pack unlock`), three skins (Wild, Blizzard, Flat).
 
