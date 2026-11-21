@@ -17,7 +17,7 @@ Some of the explanations:
 | --- | --- |
 | Call your pet | Your pet fights with you and takes hits for you. Call it whenever it isn't out. |
 | Your pet is dead | Your pet has died. Revive Pet brings it back (it costs mana and takes a few seconds). |
-| Your pet is hungry | A hungry pet does less damage and can even run away. Feeding it food it likes makes it happy again. |
+| Feed your pet | A hungry pet does less damage and can even run away. Feeding it food it likes makes it happy again. |
 | No food | Your pet eats only some kinds of food (meat, fish, bread, fruit...). Keep some in your bags. |
 | Ammo | Your bow or gun needs arrows or bullets in the ammo slot. Buy more from a general goods or weapon vendor. |
 | No aspect | An aspect is a stance for hunters: Aspect of the Hawk gives ranged attack power, Monkey dodge. |

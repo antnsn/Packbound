@@ -19,8 +19,8 @@ The card shows one of these:
 | --- | --- | --- |
 | **Call your pet** (Missing: click to call it) | Your pet isn't out. | Casts Call Pet. |
 | **Your pet is dead** (Click to revive it) | Your pet has died. | Casts Revive Pet. |
-| **Your pet is hungry** (Click to feed it) | Your pet is unhappy, and you have food it eats. | Casts Feed Pet on the first food in your bags that your pet eats. |
-| **Your pet is hungry** (No food it eats in your bags) | Your pet is unhappy, and none of your food suits it. | Nothing to cast. Buy or loot food your pet eats. |
+| **Feed your pet** (Unhappy: click to feed) | Your pet is unhappy, and you have food it eats. With **Feed it when it's only content too** on, it shows at content as well (Content: click to feed). | Casts Feed Pet on the first food in your bags that your pet eats. |
+| **Feed your pet** (No food it eats in your bags) | Your pet is unhappy, and none of your food suits it. | Nothing to cast. Buy or loot food your pet eats. |
 
 - The card glows while it shows.
 - It stays hidden in combat and while you are mounted.
@@ -58,3 +58,7 @@ The game doesn't let addons cast for you in combat, so the card hides then. Call
 
 **How quickly does it notice?**
 Packbound checks on pet, bag, mount and combat changes, and every two seconds, because happiness and death don't fire a reliable event everywhere.
+
+## Not seeing the card?
+
+Type `/pack pet`. Packbound says in chat what it sees: whether your pet is out, its happiness, whether you know Feed Pet, which food it would use, and what the card would show.

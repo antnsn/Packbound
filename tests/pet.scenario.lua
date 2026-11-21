@@ -54,10 +54,15 @@ elseif m == "dead" then
 	wb.expect("revive card", Title(), "Your pet is dead")
 	wb.check(T.macroFor("/cast Revive Pet"), "a click revives it")
 elseif m == "hungry" or m == "content" then
-	wb.expect("hungry card", Title(), "Your pet is hungry")
+	wb.expect("a card that says to feed it", Title(), "Feed your pet")
+	wb.expect("and why", wb.frame("PackboundPetFrame").statusText:GetText(),
+		m == "content" and "Content: click to feed" or "Unhappy: click to feed")
 	wb.check(T.macroFor("/cast Feed Pet\n/use item:117"), "a click feeds it the jerky")
+	wb.slash("/pack pet")
+	wb.check(wb.printed(m == "content" and "happiness: content" or "happiness: unhappy"), "/pack pet says what it sees")
+	wb.check(wb.printed("Tough Jerky"), "and the food it would use")
 elseif m == "nofood" then
-	wb.expect("hungry, but", Title(), "Your pet is hungry")
+	wb.expect("feed card, but", Title(), "Feed your pet")
 	wb.expect("says there is no food", card.statusText:GetText(), "No food it eats in your bags")
 elseif m == "combat" then
 	wb.combat(true)

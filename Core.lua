@@ -24,6 +24,8 @@ ns.disabled = Bound:NewAddon(addonName, ns, {
 	commands = {
 		ammo = { fn = function() if ns.WaypointToAmmo then ns.WaypointToAmmo() end end,
 			help = "set a waypoint to the nearest ammo vendor" },
+		pet = { fn = function() if ns.PetReport then ns.PetReport() end end,
+			help = "say what Packbound sees about your pet (happiness, food)" },
 	},
 	media = "Interface\\AddOns\\Packbound\\Media\\",
 	defaults = {

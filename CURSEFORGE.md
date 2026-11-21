@@ -44,6 +44,7 @@ Packbound looks after the things a hunter forgets: a pet that isn't out, died or
 - `/pack minimap`: show or hide the minimap button
 - `/pack explain`: turn the plain-word explanations in tooltips on or off
 - `/pack ammo`: set a waypoint to the nearest ammo vendor
+- `/pack pet`: say what Packbound sees about your pet (happiness, food)
 
 ## Ideas and contributions
 - **Missing something?** New features are added on request: leave a comment here.

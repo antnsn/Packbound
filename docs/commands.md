@@ -21,6 +21,7 @@ Everything in Packbound can be set in the options window (`/pack`). These chat c
 
 | Command | What it does |
 | --- | --- |
+| `/pack pet` | Says in chat what Packbound sees about your pet: out or not, happiness, Feed Pet, the food it would use. |
 | `/pack ammo` | Sets a waypoint to the nearest vendor who sells your kind of ammo, and says in chat who and where it is. See [Ammo](features/ammo.html). |
 
 ## Frames
