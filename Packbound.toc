@@ -4,6 +4,7 @@
 ## X-License: GPL-3.0-or-later
 ## Author: Rheolux
 ## Version: @project-version@
+## X-Curse-Project-ID: 1820047
 ## IconTexture: Interface\AddOns\Packbound\Media\Icon64
 ## SavedVariables: PackboundDB
 
