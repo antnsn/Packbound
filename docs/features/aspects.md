@@ -11,6 +11,10 @@ An aspect is a hunter stance: Aspect of the Hawk gives ranged attack power, Monk
 
 ## What it does
 
+![The aspect card]({{ '/screenshots/frames/aspoint.png' | relative_url }})
+
+![The Trueshot Aura card]({{ '/screenshots/frames/tapoint.png' | relative_url }})
+
 ### The aspect card
 
 - The card **No aspect** shows when you have no aspect up, out of combat and not mounted.
@@ -38,6 +42,8 @@ Trueshot Aura is a Marksmanship talent that gives you and your group more attack
 Both cards can also go on a key: see [Buff key](buff-key.html).
 
 ## Settings
+
+![The Aspects page]({{ '/screenshots/options-aspects.png' | relative_url }})
 
 In `/pack`, page **Aspects**:
 

@@ -11,6 +11,8 @@ A card when your arrows or bullets run low. It names the closest vendor on your 
 
 ## What it does
 
+![The ammo card]({{ '/screenshots/frames/ampoint.png' | relative_url }})
+
 - The card shows when the ammo in your ammo slot is at or below your limit (200 by default), and only while you have a bow, gun or crossbow equipped.
 - Its title shows the count, for example "Ammo: 120 left". With none left it says "No ammo left", and the line below it turns to the warning color.
 - Below the title it names the nearest ammo vendor and the zone, for example "Nearest: Duokna, Durotar (click: waypoint)". If no vendor is known nearby, it says "Running low" or "Buy arrows or bullets".
@@ -31,6 +33,8 @@ It also learns: every time you open a vendor who sells arrows or bullets, Packbo
 
 ## How to use it
 
+![The travel panel with the nearest ammo vendor]({{ '/screenshots/travel.png' | relative_url }})
+
 1. Leave **Warn when ammo runs low** on (it is on by default).
 2. When the card shows, click it, or type `/pack ammo`.
 3. Packbound puts a waypoint on the map and tracks it, and says in chat who the vendor is, the zone, the map coordinates and how many yards away it is.
@@ -41,6 +45,8 @@ The nearest vendor is also on the [travel panel](travel-panel.html) beside the E
 If you use TomTom, Packbound adds a TomTom waypoint too.
 
 ## Settings
+
+![The Pet & ammo page]({{ '/screenshots/options-pet-ammo.png' | relative_url }})
 
 In `/pack`, page **Pet & ammo**:
 

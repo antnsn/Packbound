@@ -14,6 +14,10 @@ Two buffs that are easy to lose track of while levelling. Packbound warns you be
 
 ## What it does
 
+![The Well-Rested card]({{ '/screenshots/frames/wrpoint.png' | relative_url }})
+
+![The Well Fed card]({{ '/screenshots/frames/wfpoint.png' | relative_url }})
+
 - When the buff has less time left than your limit, Packbound warns you in chat and in the middle of the screen, for example "Well Fed: 3 min left", with a sound.
 - A card then counts down the time left.
 - When Well Fed runs out, Packbound says "Well Fed is gone" in chat.
@@ -24,6 +28,8 @@ Two buffs that are easy to lose track of while levelling. Packbound warns you be
 Nothing to do: both are on by default. Click **Test** on the **Extras** page to see and hear the warning.
 
 ## Settings
+
+![The Extras page]({{ '/screenshots/options-extras.png' | relative_url }})
 
 In `/pack`, page **Extras**. The sections **Well-Rested** and **Well Fed** have the same settings:
 

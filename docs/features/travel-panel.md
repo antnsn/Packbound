@@ -11,6 +11,8 @@ Press Escape, and beside the game menu Packbound shows a small **Travel** panel 
 
 ## What it does
 
+![The travel panel beside the game menu]({{ '/screenshots/travel.png' | relative_url }})
+
 The panel has these rows, top to bottom:
 
 | Row | A click |
@@ -31,6 +33,8 @@ The panel has these rows, top to bottom:
 2. Click a row.
 
 ## Settings
+
+![The Travel page]({{ '/screenshots/options-travel.png' | relative_url }})
 
 In `/pack`, page **Travel**:
 
