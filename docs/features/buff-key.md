@@ -29,6 +29,8 @@ The ammo card isn't on the key: its click sets a waypoint and casts nothing. Use
 
 ## Settings
 
+![The Extras page with the buff key]({{ '/screenshots/options-extras.png' | relative_url }})
+
 In `/pack`, page **Extras**, section **Buff key**:
 
 | Setting | Default | What it does |

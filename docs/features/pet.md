@@ -11,6 +11,8 @@ One card for your pet. It shows when the pet isn't out, has died or is hungry, a
 
 ## What it does
 
+![The pet card]({{ '/screenshots/frames/ptpoint.png' | relative_url }})
+
 The card shows one of these:
 
 | Card | When | A click |
@@ -33,6 +35,8 @@ The card shows one of these:
 You can also put the click on a key: see [Buff key](buff-key.html).
 
 ## Settings
+
+![The Pet & ammo page]({{ '/screenshots/options-pet-ammo.png' | relative_url }})
 
 In `/pack`, page **Pet & ammo**:
 
