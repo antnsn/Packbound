@@ -37,7 +37,7 @@ Packbound shows a card when one of these needs you. Click the card and it fixes 
 
 ## The Bound family
 
-Packbound is one of the Bound addons, one per class, built on the same core (LibBound): Lightbound (paladin), Chronobound (mage), Stormbound (shaman), Packbound (hunter), Spiritbound (priest), Felbound (warlock) and Dreambound (druid). They look like their class but work the same way, so if you know one, you know them all.
+Packbound is one of the Bound addons, one per class, built on the same core (LibBound): Lightbound (paladin), Chronobound (mage), Stormbound (shaman), Packbound (hunter), Spiritbound (priest), Felbound (warlock), Dreambound (druid), Ragebound (warrior) and Shadowbound (rogue). They look like their class but work the same way, so if you know one, you know them all.
 
 ## Where to go next
 
