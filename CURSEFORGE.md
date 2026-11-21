@@ -25,6 +25,7 @@ Packbound looks after the things a hunter forgets: a pet that isn't out, died or
 - **Press Escape**: beside the game menu you get Aspect of the Cheetah, Aspect of the Pack, the nearest ammo vendor (click for a waypoint) and your Hearthstone.
 
 ## Also in it
+- **Buff key** (Extras page): out of combat, each press casts the next thing a card asks for.
 - **Well Rested and Well Fed**: a countdown before they run out, with a sound if you like.
 - **Explained**: hover over a card or button for a plain-word explanation of what it does and why (can be turned off).
 - **Your layout**: every frame can be moved, snapped to a grid and scaled (`/pack unlock`).
